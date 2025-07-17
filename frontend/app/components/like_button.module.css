@@ -1,0 +1,63 @@
+
+/* --------- LIKE COUNTER --------- */
+.like-container {
+  background: rgba(2, 47, 17, 0.839);
+  border: 1px solid #1efd34;
+  border-radius: 4px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: color 0.2s ease;
+  font-size: 0.7rem;
+  padding: 0.2rem 0.5rem;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+
+}
+
+.like-count{
+  color: inherit;
+}
+
+.like-count-glow {
+  animation: glow 1.2s ease-in;
+}
+
+@keyframes glow {
+  from {
+    color: #ffffff;
+    text-shadow: 0 0 5px rgb(185, 245, 209), 0 0 10px rgb(51, 246, 129), 0 0 20px rgb(67, 240, 136);
+  }
+  to {
+    color: inherit;
+  }
+}
+
+.like-icon:hover {
+  transform: scale(1.1);
+}
+
+.like-icon {
+  transition: transform 0.3s ease;
+  display: inline-block;
+}
+
+.animate-like {
+  animation: growShrink 1.2s ease-in;
+}
+
+@keyframes growShrink {
+  0% {
+    transform: scale(1) rotate(0deg);
+  }
+  25% {
+    transform: scale(0.9) rotate(-2deg);
+  }
+  50% {
+    transform: scale(2.5) rotate(20deg);
+  }
+  100% {
+    transform: scale(1);
+  }
+}

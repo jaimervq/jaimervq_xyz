@@ -1,0 +1,67 @@
+services:
+  frontend:
+    build: ./frontend
+    expose:
+      - 3000
+    ports:
+      - 3000:3000
+    depends_on:
+      - backend
+    restart: unless-stopped
+    networks:
+      - appnet
+
+  backend:
+    build: ./backend
+    expose:
+      - 8000
+    ports:    
+      - 8000:8000
+    depends_on:
+      - db
+    restart: unless-stopped
+    networks:
+      - appnet
+
+  db:
+    image: postgres:16-alpine
+    restart: always
+    expose:
+      - 5432
+    ports:    
+      - 5432:5432
+    env_file: .env
+    volumes:
+      - ./db/db-data:/var/lib/postgresql/data
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    networks:
+      - appnet
+
+  nginx:
+      image: nginx:latest
+      container_name: nginx-proxy
+      ports:
+        - "80:80"
+        - "443:443"
+      volumes:
+        - ./nginx/conf:/etc/nginx/conf.d
+        - ./nginx/certbot/www:/var/www/certbot
+        - ./nginx/letsencrypt:/etc/letsencrypt
+      depends_on:
+        - frontend
+        - backend
+      networks:
+        - appnet
+  certbot:
+    image: certbot/certbot
+    volumes:
+      - ./nginx/certbot/www:/var/www/certbot
+      - ./nginx/letsencrypt:/etc/letsencrypt
+    entrypoint: >
+      sh -c "certbot certonly --webroot -w /var/www/certbot \
+      --email jaime.rvq@gmail.com --agree-tos --no-eff-email \
+      -d www.jaimervq.xyz -d api.jaimervq.xyz -d www.api.jaimervq.xyz"
+
+networks:
+  appnet:
+    driver: bridge

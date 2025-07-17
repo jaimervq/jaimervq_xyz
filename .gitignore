@@ -1,0 +1,8 @@
+db-data
+public
+*.next
+*node_modules
+*target
+*/.env
+*/.env.*
+.env

@@ -1,0 +1,70 @@
+/* --------- MASONRY --------- */
+.masonry {
+  column-count: 1;
+  column-gap: 10px;
+}
+
+@media (min-width: 600px) {
+  .masonry {
+    column-count: 2;
+  }
+}
+
+@media (min-width: 900px) {
+  .masonry {
+    column-count: 3;
+  }
+}
+
+/* --------- ITEM --------- */
+.item {
+  break-inside: avoid;
+  margin-bottom: 10px;
+}
+
+.imageContainer {
+  position: relative;
+  transition: transform 0.8s ease;
+  transform-origin: center center;
+  display: inline-flex;
+  flex-direction: column; 
+  align-items: center; 
+  justify-content: center;
+}
+
+.imageContainer:hover {
+  transform: scale(1.4);
+  z-index: 10;
+}
+
+.image {
+  width: 100%;
+  border-radius: 12px;
+  height: auto;
+  display: block;
+  object-fit: cover;
+}
+
+
+/* --------- LIKE BUTTON OVERRIDES --------- */
+.like-container {
+  opacity: 0;
+  z-index: 20;
+  transition: opacity 0.8s ease;
+  max-width: 50px;
+  position: absolute; 
+  align-self: center;
+  display: none;
+  top:100%;
+  padding: 5px;
+}
+
+.imageContainer:hover .like-container {
+  opacity: 1;
+  display: inline-flex;
+}
+
+.imageContainer:hover .image {
+  opacity: 1;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.721);
+}
